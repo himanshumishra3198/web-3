@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { SeedProvider } from "./components/context/SeedContext";
 import "./index.css";
 import Layout from "./Layout";
 import Home from "./components/Home";
@@ -26,6 +27,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <SeedProvider>
+      <RouterProvider router={router} />
+    </SeedProvider>
   </StrictMode>
 );

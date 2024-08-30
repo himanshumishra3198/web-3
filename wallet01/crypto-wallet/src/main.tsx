@@ -5,7 +5,7 @@ import "./index.css";
 import Layout from "./Layout";
 import Home from "./components/Home";
 import About from "./components/About";
-import Etherium from "./components/Etherium";
+import Etherium from "./components/Ethereum";
 import Solona from "./components/Solona";
 import {
   Route,

@@ -18,6 +18,7 @@ function Home() {
       setSeed(seed);
     }
   }, [mnemonicGlobal]);
+
   async function createSeedPhrase() {
     const mn = await generateMnemonic();
     setMnemonicGlobal(mn);

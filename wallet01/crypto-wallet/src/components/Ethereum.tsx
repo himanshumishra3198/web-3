@@ -2,7 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { SeedContext } from "./context/SeedContext";
 import { Wallet, HDNodeWallet } from "ethers";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+
 import KeypairCard from "./KeypairCard";
+import { KeyContext } from "./context/KeyContext";
 
 interface keyPairInterface {
   publicKey: string;
@@ -10,8 +12,9 @@ interface keyPairInterface {
   walletIndex: number;
 }
 const Ethereum = () => {
-  let [mnemonicPresent, setMnemonicPresent] = useState(false);
   let { mnemonicGlobal, seed } = useContext(SeedContext);
+  let { ethArray, setEthArray } = useContext(KeyContext);
+  let [mnemonicPresent, setMnemonicPresent] = useState(false);
   let [index, setIndex] = useState(0);
   let [keyPairArray, setKeyPairArray] = useState<keyPairInterface[]>([]);
   const [notification, setNotification] = useState<string | null>(null);
@@ -30,6 +33,10 @@ const Ethereum = () => {
       setMnemonicPresent(true);
     }
   }, [mnemonicGlobal]);
+
+  useEffect(() => {
+    if (ethArray) setKeyPairArray(ethArray);
+  }, [ethArray]);
   function generateWalletHandler() {
     const path = `m/44'/60'/${index}'/0'`;
     console.log(path);
@@ -50,16 +57,17 @@ const Ethereum = () => {
     // const keypair = Keypair.fromSecretKey(secret);
     // setIndex(index + 1);
 
-    setKeyPairArray([
-      ...keyPairArray,
+    setEthArray([
+      ...ethArray,
       {
         privateKey: PRIVATEKEY,
         publicKey: wallet.address,
-        walletIndex: index + 1,
+        walletIndex: ethArray.length,
       },
     ]);
     setNotification("New wallet added");
   }
+
   return (
     <div className="flex justify-center mt-8 w-full mx-auto">
       {(() => {
@@ -77,13 +85,14 @@ const Ethereum = () => {
               <br />
               <div className="justify-center">
                 {keyPairArray.map((curr) => {
-                  return (
-                    <KeypairCard
-                      privateKey={curr.privateKey}
-                      publicKey={curr.publicKey}
-                      walletIndex={curr.walletIndex}
-                    />
-                  );
+                  if (curr.walletIndex !== 0)
+                    return (
+                      <KeypairCard
+                        privateKey={curr.privateKey}
+                        publicKey={curr.publicKey}
+                        walletIndex={curr.walletIndex}
+                      />
+                    );
                 })}
               </div>
               {notification && (

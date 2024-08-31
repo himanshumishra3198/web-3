@@ -13,6 +13,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+import { KeyProvider } from "./components/context/KeyContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +28,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <SeedProvider>
-      <RouterProvider router={router} />
-    </SeedProvider>
+    <KeyProvider>
+      <SeedProvider>
+        <RouterProvider router={router} />
+      </SeedProvider>
+    </KeyProvider>
   </StrictMode>
 );

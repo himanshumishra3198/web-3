@@ -41,20 +41,20 @@ const Solona = () => {
 
   function generateWalletHandler() {
     const path = `m/44'/501'/${index}'/0'`;
-    console.log(path);
+
     const derivedSeed = derivePath(path, seed.toString("hex")).key;
     const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
     const keypair = Keypair.fromSecretKey(secret);
-    setIndex(index + 1);
 
     setSolArray([
       ...solArray,
       {
         privateKey: bs58.encode(keypair.secretKey),
         publicKey: keypair.publicKey.toBase58(),
-        walletIndex: index,
+        walletIndex: solArray.length,
       },
     ]);
+    setIndex(index + 1);
     setNotification("New wallet added");
   }
   return (

@@ -7,7 +7,7 @@ function Header() {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
-              src="https://i.imghippo.com/files/PFpF51724408813.jpg"
+              src="/logo.jpg"
               className="mr-3 h-20 rounded-lg shadow-lg"
               alt="Logo"
             />

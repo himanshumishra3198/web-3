@@ -3,14 +3,19 @@ import { ClipboardIcon } from "@heroicons/react/24/outline";
 
 interface CopyButtonProps {
   textToCopy: string;
+  setNotification: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ textToCopy }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({
+  textToCopy,
+  setNotification,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopied(true);
+      setNotification("Coppied!");
       setTimeout(() => setCopied(false), 2000); // Reset copied state after 2 seconds
     });
   };
